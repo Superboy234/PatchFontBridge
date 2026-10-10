@@ -1,0 +1,75 @@
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <wchar.h>
+extern "C" IMAGE_DOS_HEADER __ImageBase;
+extern "C" { FARPROC gTargets[@COUNT@] = {}; volatile LONG gReady = 0; }
+static INIT_ONCE once = INIT_ONCE_STATIC_INIT;
+static const WORD ordinals[] = { @ORDINALS@ };
+static const char* names[] = { @NAMES@ };
+static const wchar_t hostName[] = L"@HOST@";
+#pragma pack(push, 1)
+struct ProxyConfig { char signature[32]; wchar_t payload[128]; wchar_t bridge[1024]; DWORD early; };
+#pragma pack(pop)
+volatile ProxyConfig gConfig = { "PFB_CONFIGURATION_V1", L"@PAYLOAD@", L"", 0 };
+#define payloadName const_cast<const wchar_t*>(gConfig.payload)
+static bool Sibling(wchar_t* p, const wchar_t* name) {
+    DWORD n = GetModuleFileNameW((HMODULE)&__ImageBase, p, 32768);
+    if (!n || n >= 32768) return false;
+    wchar_t* q = wcsrchr(p, L'\\'); if (!q) return false;
+    q[1] = 0;
+    return wcscat_s(p, 32768, name) == 0;
+}
+static bool GameFile(wchar_t* p, const wchar_t* name) {
+    DWORD n = GetModuleFileNameW(0, p, 32768);
+    if (!n || n >= 32768) return false;
+    wchar_t* q = wcsrchr(p, L'\\'); if (!q) return false;
+    q[1] = 0;
+    return wcscat_s(p, 32768, name) == 0;
+}
+static void Log(DWORD error, DWORD fontError) {
+    wchar_t path[32768];
+    if (!Sibling(path, L"@HOST@.proxy.log")) return;
+    HANDLE f = CreateFileW(path, FILE_APPEND_DATA, FILE_SHARE_READ | FILE_SHARE_WRITE,
+        0, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+    if (f == INVALID_HANDLE_VALUE) return;
+    char msg[256]; DWORD written;
+    char payload[128] = {};
+    WideCharToMultiByte(CP_UTF8, 0, payloadName, -1, payload, sizeof(payload), 0, 0);
+    int n = wsprintfA(msg, "pid=%lu host=@HOST@ payload=%s load_error=%lu font_error=%lu\r\n", GetCurrentProcessId(), payload, error, fontError);
+    WriteFile(f, msg, n, &written, 0); CloseHandle(f);
+}
+static BOOL CALLBACK Initialize(PINIT_ONCE, PVOID, PVOID*) {
+    wchar_t path[32768];
+    HMODULE real = 0;
+    if (gConfig.bridge[0]) {
+        if (!Sibling(path, const_cast<const wchar_t*>(gConfig.bridge))) RaiseFailFastException(0,0,0);
+        real = LoadLibraryExW(path,0,LOAD_WITH_ALTERED_SEARCH_PATH);
+    } else {
+        UINT n = GetSystemDirectoryW(path, 32768);
+        if (!n || n >= 32768 || wcscat_s(path, 32768, L"\\") || wcscat_s(path, 32768, hostName)) RaiseFailFastException(0,0,0);
+        real = LoadLibraryExW(path,0,LOAD_LIBRARY_SEARCH_SYSTEM32);
+    }
+    if (!real || real == (HMODULE)&__ImageBase) RaiseFailFastException(0, 0, 0);
+    for (unsigned i = 0; i < @COUNT@; ++i) {
+        if (!ordinals[i]) continue;
+        gTargets[i] = GetProcAddress(real, names[i] ? names[i] : MAKEINTRESOURCEA(ordinals[i]));
+        MEMORY_BASIC_INFORMATION memory = {};
+        if (!gTargets[i] || !VirtualQuery((void*)gTargets[i], &memory, sizeof(memory)) ||
+            !(memory.Protect & (PAGE_EXECUTE | PAGE_EXECUTE_READ | PAGE_EXECUTE_READWRITE | PAGE_EXECUTE_WRITECOPY)))
+            RaiseFailFastException(0, 0, 0);
+    }
+    // Allow calls made by the patch's own initialization to reach the real API.
+    InterlockedExchange(&gReady, 1);
+    if (gConfig.bridge[0]) { Log(0,0); }
+    else { @MODULELOAD@ }
+    return TRUE;
+}
+extern "C" void EnsureReady() { InitOnceExecuteOnce(&once, Initialize, 0, 0); }
+static DWORD WINAPI Worker(void*) { EnsureReady(); return 0; }
+BOOL WINAPI DllMain(HINSTANCE, DWORD reason, LPVOID) {
+    if (reason == DLL_PROCESS_ATTACH) {
+        if (gConfig.early) EnsureReady();
+        else { HANDLE worker = CreateThread(0,0,Worker,0,0,0); if(worker) CloseHandle(worker); }
+    }
+    return TRUE;
+}

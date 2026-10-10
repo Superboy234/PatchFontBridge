@@ -1,0 +1,116 @@
+{
+  "version": "1.4",
+  "date": "2026-10-10",
+  "system": "Microsoft Windows NT 10.0.26200.0",
+  "sfhSource": "vendor/SimpleFontHook: local modified snapshot, upstream commit unknown",
+  "binaries": [
+    {
+      "path": "SimpleFontHook/x32/winmm.dll",
+      "sha256": "0dcfc690ddfdb97a8a8142411a703229cc3b673a07636edc7fd6bb2d08c24f19"
+    },
+    {
+      "path": "SimpleFontHook/x64/winmm.dll",
+      "sha256": "a60119826862f8e19ce20e97ac02fd4ee2c70e630facc8348f6beb77eb752dad"
+    },
+    {
+      "path": "prebuilt/x64/d3d11.dll",
+      "sha256": "3ff5385856a450f05a2677561b0e90b113c1843d149a737f2dffd2881150dacb"
+    },
+    {
+      "path": "prebuilt/x64/d3d9.dll",
+      "sha256": "793dae9cd3d8da544e39ed7f4066b6d99868e9a3b28328889b78b7c11395772b"
+    },
+    {
+      "path": "prebuilt/x64/ddraw.dll",
+      "sha256": "7a29a0543a0bb0a9147d4d0554ae0488459ffa5f3df49155cf1aba9b571a91a3"
+    },
+    {
+      "path": "prebuilt/x64/dinput.dll",
+      "sha256": "9be92fdba23dd51a1c93e63a6d837ae4f5a4537c8060a81b9a84a5a2b827171d"
+    },
+    {
+      "path": "prebuilt/x64/dinput8.dll",
+      "sha256": "4a3ce340a9fc847eb43a9459bb4f597194b7bfc14274b3b89b3511f5e6621045"
+    },
+    {
+      "path": "prebuilt/x64/dsound.dll",
+      "sha256": "984b3fcf82db53529ad2e876ccc21c09ec8c112eba22d715a64155b35ee03713"
+    },
+    {
+      "path": "prebuilt/x64/dxgi.dll",
+      "sha256": "e4eede1b2970e83b9ffd8f299893ae576bdfb15260f0f8f0d8330f608d5f5140"
+    },
+    {
+      "path": "prebuilt/x64/version.dll",
+      "sha256": "8860b4d70cf5ce6639297ef1241b0b583c67deee7de1f4313f53d669cf15fa6a"
+    },
+    {
+      "path": "prebuilt/x64/winhttp.dll",
+      "sha256": "86e17fc3e63e90a9d61d5db8b225f124d053a373c2629793f869930fa8a77f2b"
+    },
+    {
+      "path": "prebuilt/x64/wininet.dll",
+      "sha256": "cceb9188003518fcf68d4be51efdf74d407c2df326ccaef23256bad22c19b912"
+    },
+    {
+      "path": "prebuilt/x64/xinput1_3.dll",
+      "sha256": "b536a69e073d65d74644452079a1682c38cf559b9e66382f8a5ac87f7b7e7f03"
+    },
+    {
+      "path": "prebuilt/x64/xinput1_4.dll",
+      "sha256": "c6f3e6a22785953a479a6c651aa20171ac496a035a9f218ae4ad504d8ddeef20"
+    },
+    {
+      "path": "prebuilt/x86/d3d11.dll",
+      "sha256": "75a87cde951544536ae0cb3ce9716b9e29a37c626d57012df55e8b38bfb09587"
+    },
+    {
+      "path": "prebuilt/x86/d3d8.dll",
+      "sha256": "f07b4dc2ab345ecfbffa806a1ec21117cfa4bd9ca8e05cc09bc1dacce2495222"
+    },
+    {
+      "path": "prebuilt/x86/d3d9.dll",
+      "sha256": "af49c8c9e6a4069cede19097c15029c717d5f15af4c2d582860e88b1906a273c"
+    },
+    {
+      "path": "prebuilt/x86/ddraw.dll",
+      "sha256": "1791ffb193f9294edc6c6034adfa3465f97d35d907d4d9b422adf1c7bab24571"
+    },
+    {
+      "path": "prebuilt/x86/dinput.dll",
+      "sha256": "cccfe555b40df9f1db183fdff086e80789bae59cfb5d66547ae1f99815390c6a"
+    },
+    {
+      "path": "prebuilt/x86/dinput8.dll",
+      "sha256": "036cfaa7d19d319bc4b74b76a5c116b45c4206aa768132dce7e92f69a88452f9"
+    },
+    {
+      "path": "prebuilt/x86/dsound.dll",
+      "sha256": "fda2dac86473f93e099ccd754dacb707120f1f6faaa01e1b93fca6a59c1cc48c"
+    },
+    {
+      "path": "prebuilt/x86/dxgi.dll",
+      "sha256": "8a5d07369f65993c8b886daa2711e15cb623a3efcc2003acd1fe3742e903f684"
+    },
+    {
+      "path": "prebuilt/x86/version.dll",
+      "sha256": "9b86922438f756a65ce2a511ba1b49bb78b4240d90a16a5e31e7969db55cb23f"
+    },
+    {
+      "path": "prebuilt/x86/winhttp.dll",
+      "sha256": "8d5b9e5009c91bdae790de9a67a0e0e03f3d28a2871e364304c040b5a31216b7"
+    },
+    {
+      "path": "prebuilt/x86/wininet.dll",
+      "sha256": "dec74445567f28baca2a8fb44df5b8b1d2a537d58b8188e5ec96af4e479af268"
+    },
+    {
+      "path": "prebuilt/x86/xinput1_3.dll",
+      "sha256": "caf7c9ef8e887a5271d7a9ca58ff86c396dc0759352d2523ee0c750193cf5209"
+    },
+    {
+      "path": "prebuilt/x86/xinput1_4.dll",
+      "sha256": "4d97f6e7d98cc12d1f065308b4b839a3fabdee37570099c55d8fd046231c4925"
+    }
+  ]
+}

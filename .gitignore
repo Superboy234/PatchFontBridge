@@ -1,0 +1,27 @@
+# Windows
+*.exe
+*.dll
+*.pdb
+*.obj
+*.ilk
+*.exp
+*.lib
+*.user
+*.suo
+bin/
+obj/
+.vs/
+
+# Required release resources and upstream build dependencies
+!SimpleFontHook/x32/winmm.dll
+!SimpleFontHook/x64/winmm.dll
+!prebuilt/x86/*.dll
+!prebuilt/x64/*.dll
+!vendor/SimpleFontHook/detours.lib
+!vendor/SimpleFontHook/detours_x64.lib
+!vendor/SimpleFontHook/tools/upx/upx.exe
+.WinmmProxyMaker/
+releases/
+
+*.exe.config
+
